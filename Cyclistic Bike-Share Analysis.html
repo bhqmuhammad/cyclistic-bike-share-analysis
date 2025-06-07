@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclistic Bike-Share Analysis | Data-Driven Marketing Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .slide {
+            display: none;
+            min-height: 100vh;
+        }
+        .slide.active {
+            display: flex;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .bike-icon {
+            color: #2563eb;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-bicycle bike-icon text-2xl mr-3"></i>
+                    <span class="text-xl font-bold text-gray-800">Cyclistic Analysis</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="previousSlide()" class="p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="slideCounter" class="px-4 py-2 bg-gray-200 rounded">1 / 8</span>
+                    <button onclick="nextSlide()" class="p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Slide 1: Title Slide -->
+    <section class="slide active gradient-bg text-white">
+        <div class="container mx-auto px-4 flex flex-col justify-center items-center text-center">
+            <div class="fade-in">
+                <i class="fas fa-bicycle text-8xl mb-8 opacity-80"></i>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">Cyclistic</h1>
+                <h2 class="text-2xl md:text-4xl font-light mb-8">Bike-Share Analysis</h2>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6 max-w-2xl mx-auto">
+                    <p class="text-xl mb-4">How do annual members and casual riders use Cyclistic bikes differently?</p>
+                    <p class="text-lg opacity-90">A data-driven marketing strategy to convert casual riders into annual members</p>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm opacity-75">Analyzed by: bhqmuhammad | Google Data Analytics Capstone Project</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Business Scenario -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Business Scenario</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                            <h3 class="text-2xl font-semibold text-blue-600 mb-4">
+                                <i class="fas fa-target mr-2"></i>The Challenge
+                            </h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Cyclistic, a bike-share company in Chicago, wants to maximize the number of annual memberships. 
+                                The director of marketing believes converting casual riders to annual members is key to future growth.
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-semibold text-green-600 mb-4">
+                                <i class="fas fa-question-circle mr-2"></i>Key Question
+                            </h3>
+                            <p class="text-lg font-medium text-gray-800 bg-yellow-100 p-4 rounded-lg">
+                                "How do annual members and casual riders use Cyclistic bikes differently?"
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-8">
+                            <i class="fas fa-users text-6xl text-blue-500 mb-4"></i>
+                            <h4 class="text-xl font-semibold mb-4">Stakeholders</h4>
+                            <ul class="text-left space-y-2">
+                                <li class="flex items-center"><i class="fas fa-user-tie text-blue-500 mr-2"></i>Lily Moreno (Director of Marketing)</li>
+                                <li class="flex items-center"><i class="fas fa-users text-green-500 mr-2"></i>Cyclistic Marketing Team</li>
+                                <li class="flex items-center"><i class="fas fa-building text-purple-500 mr-2"></i>Cyclistic Executive Team</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Data Overview -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Data Overview</h2>
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-calendar text-3xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Time Period</h3>
+                        <p class="text-gray-600">Q1 2019 & Q1 2020</p>
+                        <p class="text-sm text-gray-500">January - March</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-database text-3xl text-green-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Data Source</h3>
+                        <p class="text-gray-600">Motivate International Inc.</p>
+                        <p class="text-sm text-gray-500">Historical trip data</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-chart-bar text-3xl text-purple-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Analysis Tools</h3>
+                        <p class="text-gray-600">Python & Pandas</p>
+                        <p class="text-sm text-gray-500">Data cleaning & analysis</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Data Processing Steps</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-semibold text-blue-600 mb-3">Data Preparation</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Combined Q1 2019 & Q1 2020 datasets</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Removed duplicate entries</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Ensured data consistency</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-600 mb-3">Data Transformation</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-center"><i class="fas fa-plus text-blue-500 mr-2"></i>Created <code class="bg-gray-100 px-2 py-1 rounded">ride_length</code> column</li>
+                                <li class="flex items-center"><i class="fas fa-plus text-blue-500 mr-2"></i>Created <code class="bg-gray-100 px-2 py-1 rounded">day_of_week</code> column</li>
+                                <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Removed invalid ride lengths</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Key Finding 1 - Ride Duration -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Key Finding #1</h2>
+                <div class="text-center mb-8">
+                    <p class="text-2xl font-semibold text-blue-600">Casual riders take <span class="highlight">3x longer rides</span> than annual members</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="chart-container">
+                            <canvas id="rideDurationChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-blue-800 mb-3">
+                                <i class="fas fa-user-tie mr-2"></i>Annual Members
+                            </h3>
+                            <div class="text-3xl font-bold text-blue-600 mb-2">~12 minutes</div>
+                            <p class="text-gray-700">Average ride duration suggests <strong>functional, commute-focused usage</strong></p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-800 mb-3">
+                                <i class="fas fa-user mr-2"></i>Casual Riders
+                            </h3>
+                            <div class="text-3xl font-bold text-green-600 mb-2">~36 minutes</div>
+                            <p class="text-gray-700">Average ride duration indicates <strong>leisurely, recreational usage</strong></p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-400">
+                            <p class="text-sm text-yellow-800">
+                                <i class="fas fa-lightbulb mr-2"></i>
+                                <strong>Insight:</strong> Different usage patterns suggest different value propositions for each group.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Key Finding 2 - Weekly Usage Patterns -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Key Finding #2</h2>
+                <div class="text-center mb-8">
+                    <p class="text-2xl font-semibold text-purple-600">Usage patterns differ <span class="highlight">significantly by day of week</span></p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="chart-container">
+                            <canvas id="weeklyUsageChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-blue-800 mb-3">
+                                <i class="fas fa-briefcase mr-2"></i>Annual Members
+                            </h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-arrow-up text-blue-500 mr-2"></i>Higher usage on <strong>weekdays</strong></li>
+                                <li><i class="fas fa-clock text-blue-500 mr-2"></i>Peak times: <strong>morning & evening commute</strong></li>
+                                <li><i class="fas fa-chart-line text-blue-500 mr-2"></i>Consistent usage pattern</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-800 mb-3">
+                                <i class="fas fa-sun mr-2"></i>Casual Riders
+                            </h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-arrow-up text-green-500 mr-2"></i>Massive spike on <strong>weekends</strong></li>
+                                <li><i class="fas fa-bicycle text-green-500 mr-2"></i>Saturday & Sunday peak usage</li>
+                                <li><i class="fas fa-heart text-green-500 mr-2"></i>Recreational activity pattern</li>
+                            </ul>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-400">
+                            <p class="text-sm text-purple-800">
+                                <i class="fas fa-lightbulb mr-2"></i>
+                                <strong>Insight:</strong> Members use bikes for work, casual riders for leisure.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Marketing Recommendations -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Marketing Recommendations</h2>
+                <div class="space-y-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4 mt-1">1</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-blue-600 mb-3">Launch "Weekend Warrior" Membership</h3>
+                                <p class="text-gray-700 mb-3">Create a discounted membership tier specifically for weekend riders, appealing directly to casual riders' primary usage pattern.</p>
+                                <div class="bg-blue-50 p-3 rounded">
+                                    <p class="text-sm text-blue-800"><strong>Target:</strong> Casual riders who primarily use bikes on weekends for recreational activities</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
+                        <div class="flex items-start">
+                            <div class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4 mt-1">2</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-green-600 mb-3">Market Commuter Benefits</h3>
+                                <p class="text-gray-700 mb-3">Highlight cost-effectiveness and convenience of annual membership for daily commuting through targeted weekday campaigns.</p>
+                                <div class="bg-green-50 p-3 rounded">
+                                    <p class="text-sm text-green-800"><strong>Strategy:</strong> Compare daily costs vs. annual membership savings for regular commuters</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-purple-500">
+                        <div class="flex items-start">
+                            <div class="bg-purple-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mr-4 mt-1">3</div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-purple-600 mb-3">Introduce Tiered Memberships</h3>
+                                <p class="text-gray-700 mb-3">Develop flexible, lower-priced membership options with set monthly rides as low-commitment entry points.</p>
+                                <div class="bg-purple-50 p-3 rounded">
+                                    <p class="text-sm text-purple-800"><strong>Approach:</strong> Bridge the gap between casual usage and full annual commitment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Expected Impact -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Expected Impact</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-2xl font-semibold text-blue-600 mb-6 text-center">
+                            <i class="fas fa-chart-line mr-2"></i>Projected Outcomes
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-blue-50 rounded">
+                                <span class="text-gray-700">Weekend Membership Conversion</span>
+                                <span class="font-bold text-blue-600">15-25%</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded">
+                                <span class="text-gray-700">Commuter Campaign ROI</span>
+                                <span class="font-bold text-green-600">200-300%</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded">
+                                <span class="text-gray-700">Tiered Membership Uptake</span>
+                                <span class="font-bold text-purple-600">30-40%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-2xl font-semibold text-green-600 mb-6 text-center">
+                            <i class="fas fa-bullseye mr-2"></i>Success Metrics
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Increased annual membership conversion rate</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Higher customer lifetime value</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Reduced customer acquisition cost</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Improved revenue predictability</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Enhanced customer engagement</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+                    <h4 class="text-xl font-semibold text-center mb-4">Implementation Timeline</h4>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <div class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">Q1</div>
+                            <p class="text-sm">Weekend Warrior Launch</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">Q2</div>
+                            <p class="text-sm">Commuter Campaign</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">Q3</div>
+                            <p class="text-sm">Tiered Memberships</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Conclusion -->
+    <section class="slide">
+        <div class="container mx-auto px-4 py-16 max-w-6xl">
+            <div class="fade-in text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8">Thank You</h2>
+                <div class="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+                    <i class="fas fa-bicycle text-6xl text-blue-500 mb-6"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Key Takeaways</h3>
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
+                        <div>
+                            <h4 class="font-semibold text-blue-600 mb-3">Data Insights</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Casual riders take 3x longer rides (36 vs 12 minutes)</li>
+                                <li>• Members use bikes for commuting (weekdays)</li>
+                                <li>• Casual riders prefer weekend recreational rides</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-green-600 mb-3">Strategic Actions</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Launch Weekend Warrior membership tier</li>
+                                <li>• Market commuter benefits to casual riders</li>
+                                <li>• Introduce flexible membership options</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                        <p class="text-lg font-medium text-gray-800">
+                            "Understanding user behavior is the key to successful conversion strategies"
+                        </p>
+                    </div>
+                    <div class="mt-6">
+                        <p class="text-sm text-gray-600">
+                            Analysis completed as part of Google Data Analytics Professional Certificate
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <i class="fab fa-github mr-2"></i>
+                            Repository: bhqmuhammad/cyclistic-bike-share-analysis
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Trigger animations
+            const activeSlide = slides[currentSlide];
+            const fadeElements = activeSlide.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = 'fadeIn 0.8s ease-in-out';
+            });
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Initialize charts when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ride Duration Chart
+            const rideDurationCtx = document.getElementById('rideDurationChart');
+            if (rideDurationCtx) {
+                new Chart(rideDurationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Annual Members', 'Casual Riders'],
+                        datasets: [{
+                            label: 'Average Ride Duration (minutes)',
+                            data: [12, 36],
+                            backgroundColor: ['#3B82F6', '#10B981'],
+                            borderColor: ['#1D4ED8', '#059669'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Average Ride Duration Comparison'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + ' min';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Weekly Usage Chart
+            const weeklyUsageCtx = document.getElementById('weeklyUsageChart');
+            if (weeklyUsageCtx) {
+                new Chart(weeklyUsageCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                        datasets: [{
+                            label: 'Annual Members',
+                            data: [100, 105, 102, 108, 95, 60, 55],
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }, {
+                            label: 'Casual Riders',
+                            data: [30, 25, 28, 32, 35, 120, 140],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Weekly Usage Patterns (Relative Scale)'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Relative Usage'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
