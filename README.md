@@ -776,15 +776,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## ⭐ Acknowledgments
-
-- **Google Data Analytics Program** for the comprehensive curriculum
-- **Motivate International Inc.** for providing the Divvy trip data
-- **City of Chicago** for supporting open data initiatives
-- **Open Source Community** for the amazing tools and libraries
-
----
-
 <div align="center">
   <p><strong>Made with ❤️ for data science and sustainable transportation</strong></p>
   <p>⭐ Star this repo if you found it helpful!</p>
