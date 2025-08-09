@@ -1,11 +1,35 @@
 
 # Cyclistic Bike-Share Analysis: Converting Casual Riders to Annual Members
 
-[![HTML](https://img.shields.io/badge/HTML-Interactive%20Presentation-orange)](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success)](tests/)
 [![Data Analysis](https://img.shields.io/badge/Data%20Analysis-Python%20%7C%20Pandas-blue)](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis)
 [![Google Data Analytics](https://img.shields.io/badge/Google%20Data%20Analytics-Capstone%20Project-green)](https://www.coursera.org/professional-certificates/google-data-analytics)
 
 **A comprehensive data analysis project demonstrating the complete data analytics process from Ask to Act, with actionable marketing recommendations for a bike-share company.**
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/bhqmuhammad/cyclistic-bike-share-analysis.git
+cd cyclistic-bike-share-analysis
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the complete analysis with sample data
+python main_analysis.py --sample
+
+# Or open the interactive notebook
+jupyter notebook notebooks/cyclistic_analysis.ipynb
+
+# View the presentation
+open index.html
+```
 
 ---
 
@@ -479,21 +503,25 @@ This project includes a professional, interactive HTML presentation with:
 
 ### 🚀 How to View
 
-1. **Clone the repository**:
+1. **Open the homepage**:
    ```bash
-   git clone https://github.com/bhqmuhammad/cyclistic-bike-share-analysis.git
+   open index.html  # Opens the main project page
    ```
 
-2. **Open the presentation**:
+2. **Run the interactive analysis**:
    ```bash
-   cd cyclistic-bike-share-analysis
-   open index.html  # or double-click the file
+   python main_analysis.py --sample
    ```
 
-3. **Navigate through slides**:
-   - Use arrow keys or spacebar
-   - Click navigation buttons
-   - 8 comprehensive slides covering the entire analysis
+3. **Explore the Jupyter notebook**:
+   ```bash
+   jupyter notebook notebooks/cyclistic_analysis.ipynb
+   ```
+
+4. **View the presentation**:
+   ```bash
+   open assets/cyclistic_presentation.html
+   ```
 
 ---
 
@@ -501,19 +529,175 @@ This project includes a professional, interactive HTML presentation with:
 
 ```
 cyclistic-bike-share-analysis/
-├── index.html                     # Interactive presentation deck
-├── README.md                      # Project documentation
-├── analysis.py                    # Complete Python analysis code
-├── data_processing.py             # Data cleaning and transformation
-├── visualizations.py              # Chart generation code
-├── Case Study 1_How does a bike-share navigate speedy success.html
-├── Case Study 1_How does a bike-share navigate speedy success.pdf
-├── Divvy_Trips_2019_Q1.html      # Q1 2019 data visualization
-├── Divvy_Trips_2020_Q1.html      # Q1 2020 data visualization
-└── data/                          # Raw data files (if included)
-    ├── Divvy_Trips_2019_Q1.csv
-    └── Divvy_Trips_2020_Q1.csv
+├── 📄 index.html                     # Main project homepage
+├── 🐍 main_analysis.py               # Main analysis script
+├── 📋 requirements.txt               # Python dependencies
+├── ⚙️  pyproject.toml                # Project configuration
+├── 🧪 tests/                         # Test suite
+│   ├── test_cyclistic_analysis.py    # Main test file
+│   └── README.md                     # Test documentation
+├── 🔧 src/                           # Source code modules
+│   ├── __init__.py                   # Package initialization
+│   ├── cyclistic_analyzer.py         # Main analysis engine
+│   ├── visualizations.py             # Data visualization tools
+│   └── data_utils.py                 # Data management utilities
+├── 📓 notebooks/                     # Jupyter notebooks
+│   └── cyclistic_analysis.ipynb      # Interactive analysis notebook
+├── 💾 data/                          # Data directory
+│   ├── README.md                     # Data documentation
+│   ├── raw/                          # Original CSV files
+│   ├── sample/                       # Sample data for demos
+│   ├── Divvy_Trips_2019_Q1.html     # 2019 Q1 data visualization
+│   └── Divvy_Trips_2020_Q1.html     # 2020 Q1 data visualization
+├── 🎨 assets/                        # Presentation and media files
+│   ├── cyclistic_presentation.html   # Interactive slide deck
+│   ├── css/                          # Stylesheets
+│   └── js/                           # JavaScript files
+├── 📚 docs/                          # Documentation
+│   ├── Case Study 1_How does a bike-share navigate speedy success.html
+│   └── Case Study 1_How does a bike-share navigate speedy success.pdf
+├── 📄 LICENSE                        # MIT License
+└── 📖 README.md                      # This file
 ```
+
+---
+
+## 🛠️ Features & Tools
+
+### 🔬 Analysis Engine
+- **Modular Python Architecture**: Clean, reusable code modules
+- **Automated Data Processing**: Handle missing data, outliers, and format inconsistencies
+- **Statistical Analysis**: Comprehensive ride pattern and user behavior analysis
+- **Sample Data Generation**: Built-in sample data for demonstrations
+
+### 📊 Visualization Suite
+- **Interactive Charts**: Dynamic visualizations with matplotlib and seaborn
+- **Comprehensive Dashboard**: Multi-chart analysis overview
+- **Export Capabilities**: Save charts in high-resolution formats
+- **Presentation Ready**: Professional-quality outputs
+
+### 🧪 Development Tools
+- **Test Suite**: Comprehensive unit and integration tests
+- **Code Quality**: Black, flake8, isort, and mypy configuration
+- **Documentation**: Jupyter notebooks and detailed docstrings
+- **CI/CD Ready**: GitHub Actions compatible setup
+
+### 🌐 Presentation Layer
+- **Interactive Website**: Professional homepage with project overview
+- **Slide Deck**: Interactive presentation with live charts
+- **Jupyter Notebooks**: Step-by-step analysis with code
+- **Mobile Responsive**: Works on all devices
+
+---
+
+## 🔧 Installation & Setup
+
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+- Git
+
+### Quick Installation
+```bash
+# Clone the repository
+git clone https://github.com/bhqmuhammad/cyclistic-bike-share-analysis.git
+cd cyclistic-bike-share-analysis
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Optional: Install development dependencies
+pip install -r requirements.txt[dev]
+```
+
+### Development Setup
+```bash
+# Install in development mode
+pip install -e .
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run tests
+python -m pytest tests/
+
+# Run linting
+black src/ tests/
+flake8 src/ tests/
+```
+
+---
+
+## 📈 Usage
+
+### 🚀 Quick Analysis
+```bash
+# Run with sample data (no external files needed)
+python main_analysis.py --sample
+
+# Run with your own data files
+python main_analysis.py --output-dir results/
+
+# Skip visualizations (faster execution)
+python main_analysis.py --sample --no-visualizations
+```
+
+### 📓 Interactive Analysis
+```bash
+# Launch Jupyter notebook
+jupyter notebook notebooks/cyclistic_analysis.ipynb
+
+# Or use JupyterLab
+jupyter lab
+```
+
+### 🔧 Programmatic Usage
+```python
+from src import CyclisticAnalyzer, CyclisticVisualizer, DataManager
+
+# Initialize components
+data_manager = DataManager()
+analyzer = CyclisticAnalyzer()
+
+# Setup and analyze data
+analyzer.prepare_data()  # Uses sample data if no files provided
+results = analyzer.run_complete_analysis()
+
+# Create visualizations
+visualizer = CyclisticVisualizer(analyzer)
+visualizer.create_comprehensive_dashboard()
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+python -m pytest tests/
+
+# Run with coverage
+python -m pytest tests/ --cov=src --cov-report=html
+
+# Run specific test
+python tests/test_cyclistic_analysis.py
+```
+
+---
+
+## 📊 Data
+
+### Sample Data
+The repository includes sample data that maintains the statistical patterns of the original dataset:
+- **Automatic Generation**: Creates realistic sample data when original files aren't available
+- **Realistic Patterns**: Preserves user behavior differences and temporal patterns
+- **No Setup Required**: Works out of the box for demonstrations
+
+### Original Data
+To use the complete Divvy dataset:
+1. Download from [Divvy System Data](https://divvy-tripdata.s3.amazonaws.com/index.html)
+2. Place `Divvy_Trips_2019_Q1.csv` and `Divvy_Trips_2020_Q1.csv` in `data/raw/`
+3. Run analysis without the `--sample` flag
 
 ---
 
@@ -528,13 +712,80 @@ This project demonstrates proficiency in:
 - **Share**: Professional presentation and data visualization
 - **Act**: Actionable recommendations based on data insights
 
+### 🏆 Technical Skills Demonstrated
+- **Python Programming**: Object-oriented design, modular architecture
+- **Data Analysis**: Pandas, NumPy, statistical analysis
+- **Data Visualization**: Matplotlib, Seaborn, interactive charts
+- **Software Engineering**: Testing, documentation, code quality
+- **Web Development**: HTML5, CSS3, JavaScript, responsive design
+- **Project Management**: Git, documentation, reproducible research
+
 ---
 
-## 📄 Data Ethics & Licensing
+## 🤝 Contributing
 
+We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details.
+
+### 🛠️ Development Workflow
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`python -m pytest tests/`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### 🎯 Areas for Contribution
+- Additional analysis features
+- New visualization types
+- Performance optimizations
+- Documentation improvements
+- Test coverage expansion
+
+---
+
+## 📜 License & Data Usage
+
+### Project License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Data License
 - Data provided under [Divvy Data License Agreement](https://ride.divvybikes.com/data-license-agreement)
 - No personally identifiable information (PII) used
 - Analysis focused on aggregate usage patterns
 - Compliant with data privacy regulations
 
 ---
+
+## 🔗 Links & Resources
+
+- **Live Demo**: [GitHub Pages](https://bhqmuhammad.github.io/cyclistic-bike-share-analysis/)
+- **Documentation**: [Project Wiki](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis/wiki)
+- **Issues**: [Bug Reports & Feature Requests](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis/issues)
+- **Google Data Analytics Certificate**: [Coursera](https://www.coursera.org/professional-certificates/google-data-analytics)
+- **Divvy Data**: [Trip Data](https://divvy-tripdata.s3.amazonaws.com/index.html)
+
+---
+
+## 📞 Contact
+
+**Muhammad Baihaqi**  
+📧 Email: bhqmuhammad@example.com  
+🔗 LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)  
+🐙 GitHub: [@bhqmuhammad](https://github.com/bhqmuhammad)
+
+---
+
+## ⭐ Acknowledgments
+
+- **Google Data Analytics Program** for the comprehensive curriculum
+- **Motivate International Inc.** for providing the Divvy trip data
+- **City of Chicago** for supporting open data initiatives
+- **Open Source Community** for the amazing tools and libraries
+
+---
+
+<div align="center">
+  <p><strong>Made with ❤️ for data science and sustainable transportation</strong></p>
+  <p>⭐ Star this repo if you found it helpful!</p>
+</div>

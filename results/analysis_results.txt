@@ -1,0 +1,14 @@
+CYCLISTIC BIKE-SHARE ANALYSIS RESULTS
+==================================================
+
+total_rides: 10,000
+casual_rides: 450
+member_rides: 1,528
+duration_stats:                count   mean  median    std  min    max
+member_casual                                         
+casual           450  36.65   36.97  15.56  1.0  80.14
+member          1528  11.89   11.83   4.97  1.0  29.53
+casual_avg_duration: 36.65
+member_avg_duration: 11.89
+casual_weekend_pct: 29.11
+member_weekend_pct: 28.86
