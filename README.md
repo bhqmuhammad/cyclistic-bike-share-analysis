@@ -759,8 +759,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links & Resources
 
-- **Live Demo**: [GitHub Pages](https://bhqmuhammad.github.io/cyclistic-bike-share-analysis/)
-- **Documentation**: [Project Wiki](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis/wiki)
 - **Issues**: [Bug Reports & Feature Requests](https://github.com/bhqmuhammad/cyclistic-bike-share-analysis/issues)
 - **Google Data Analytics Certificate**: [Coursera](https://www.coursera.org/professional-certificates/google-data-analytics)
 - **Divvy Data**: [Trip Data](https://divvy-tripdata.s3.amazonaws.com/index.html)
@@ -770,8 +768,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 **Muhammad Baihaqi**  
-📧 Email: bhqmuhammad@example.com  
-🔗 LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)  
+🔗 LinkedIn: [Your LinkedIn](https://linkedin.com/in/muhammad-baihaqi-2506bhq)  
 🐙 GitHub: [@bhqmuhammad](https://github.com/bhqmuhammad)
 
 ---
