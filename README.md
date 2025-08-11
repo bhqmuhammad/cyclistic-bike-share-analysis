@@ -768,7 +768,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 **Muhammad Baihaqi**  
-🔗 LinkedIn: [Your LinkedIn](https://linkedin.com/in/muhammad-baihaqi-2506bhq)  
+🔗 LinkedIn: [Muhammad Baihaqi](https://linkedin.com/in/muhammad-baihaqi-2506bhq)  
 🐙 GitHub: [@bhqmuhammad](https://github.com/bhqmuhammad)
 
 ---
