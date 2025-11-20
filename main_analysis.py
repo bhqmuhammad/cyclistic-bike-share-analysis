@@ -18,157 +18,27 @@ License: MIT
 
 import argparse
 import sys
-from pathlib import Path
 import warnings
+from pathlib import Path
+from typing import Any, Dict
 
 # Add src directory to path for imports
 sys.path.append(str(Path(__file__).parent / 'src'))
 
-from src.cyclistic_analyzer import CyclisticAnalyzer
-from src.visualizations import CyclisticVisualizer
-from src.data_utils import DataManager
+from src.cyclistic_analyzer import CyclisticAnalyzer  # noqa: E402
+from src.data_utils import DataManager  # noqa: E402
+from src.visualizations import CyclisticVisualizer  # noqa: E402
 
 warnings.filterwarnings('ignore')
 
 
-def main():
-    """Main analysis function."""
-    parser = argparse.ArgumentParser(description='Run Cyclistic Bike-Share Analysis')
-    parser.add_argument('--sample', action='store_true', 
-                       help='Use sample data instead of original files')
-    parser.add_argument('--output-dir', default='results',
-                       help='Directory to save results (default: results/)')
-    parser.add_argument('--no-visualizations', action='store_true',
-                       help='Skip generating visualizations')
-    
-    args = parser.parse_args()
-    
-    # Create output directory
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(exist_ok=True)
-    
-    print("="*60)
-    print("CYCLISTIC BIKE-SHARE ANALYSIS")
-    print("="*60)
-    print(f"Output directory: {output_dir}")
-    print(f"Using sample data: {args.sample}")
-    print()
-    
-    # Initialize data manager
-    print("Setting up data...")
-    data_manager = DataManager()
-    
-    try:
-        # Setup data
-        file_2019, file_2020, is_sample = data_manager.setup_data(force_sample=args.sample)
-        
-        if is_sample:
-            print("📊 Using sample data for demonstration")
-        else:
-            print("📊 Using original Divvy trip data")
-        
-        print(f"Data files:")
-        print(f"  - 2019 Q1: {file_2019}")
-        print(f"  - 2020 Q1: {file_2020}")
-        print()
-        
-        # Initialize analyzer
-        print("Initializing analyzer...")
-        analyzer = CyclisticAnalyzer()
-        
-        # Prepare data
-        print("Preparing data...")
-        if file_2019.exists() and file_2020.exists():
-            analyzer.prepare_data(str(file_2019), str(file_2020))
-        else:
-            analyzer.prepare_data()  # Use built-in sample data
-        
-        print()
-        
-        # Run analysis
-        print("Running comprehensive analysis...")
-        results = analyzer.run_complete_analysis()
-        
-        if results:
-            # Save results to file
-            results_file = output_dir / 'analysis_results.txt'
-            with open(results_file, 'w') as f:
-                f.write("CYCLISTIC BIKE-SHARE ANALYSIS RESULTS\n")
-                f.write("="*50 + "\n\n")
-                
-                for key, value in results.items():
-                    if isinstance(value, (int, float)):
-                        if isinstance(value, float):
-                            f.write(f"{key}: {value:.2f}\n")
-                        else:
-                            f.write(f"{key}: {value:,}\n")
-                    else:
-                        f.write(f"{key}: {value}\n")
-            
-            print(f"\n📄 Analysis results saved to: {results_file}")
-        
-        # Generate summary report
-        print("\n" + "="*60)
-        analyzer.generate_summary_report()
-        
-        # Generate visualizations
-        if not args.no_visualizations:
-            print("\n" + "="*60)
-            print("GENERATING VISUALIZATIONS")
-            print("="*60)
-            
-            # Initialize visualizer
-            visualizer = CyclisticVisualizer(analyzer)
-            
-            # Create visualization output directory
-            viz_dir = output_dir / "visualizations"
-            viz_dir.mkdir(exist_ok=True)
-            
-            try:
-                # Generate all visualizations
-                visualizer.generate_all_visualizations(str(viz_dir))
-                print(f"📊 Visualizations saved to: {viz_dir}")
-            except Exception as e:
-                print(f"⚠️  Error generating visualizations: {e}")
-                print("This might be due to missing display or matplotlib backend issues.")
-        
-        # Generate business recommendations
-        print("\n" + "="*60)
-        print("BUSINESS RECOMMENDATIONS")
-        print("="*60)
-        
-        recommendations = generate_recommendations(results)
-        
-        # Save recommendations
-        recommendations_file = output_dir / 'business_recommendations.md'
-        with open(recommendations_file, 'w') as f:
-            f.write(recommendations)
-        
-        print(f"💡 Business recommendations saved to: {recommendations_file}")
-        
-        print("\n" + "="*60)
-        print("ANALYSIS COMPLETE")
-        print("="*60)
-        print(f"📁 All results saved to: {output_dir}")
-        print("\nFiles generated:")
-        print(f"  - analysis_results.txt")
-        print(f"  - business_recommendations.md")
-        if not args.no_visualizations:
-            print(f"  - visualizations/ (PNG files)")
-        
-    except Exception as e:
-        print(f"❌ Error during analysis: {e}")
-        print("\nPlease check your data files and try again.")
-        sys.exit(1)
-
-
-def generate_recommendations(results):
+def generate_recommendations(results: Dict[str, Any]) -> str:
     """
     Generate business recommendations based on analysis results.
-    
+
     Args:
         results (dict): Analysis results
-        
+
     Returns:
         str: Formatted recommendations
     """
@@ -182,12 +52,12 @@ Based on the comprehensive analysis of Cyclistic bike-share data, we have identi
 
 ### 🚴‍♀️ Ride Duration Patterns
 """
-    
+
     if results and 'casual_avg_duration' in results and 'member_avg_duration' in results:
         casual_avg = results['casual_avg_duration']
         member_avg = results['member_avg_duration']
         ratio = casual_avg / member_avg
-        
+
         recommendations += f"""
 - **Casual riders** average {casual_avg:.1f} minutes per ride
 - **Annual members** average {member_avg:.1f} minutes per ride
@@ -195,12 +65,12 @@ Based on the comprehensive analysis of Cyclistic bike-share data, we have identi
 
 **Insight**: Casual riders use bikes for leisure and recreation, while members use them for functional transportation.
 """
-    
+
     if results and 'casual_weekend_pct' in results and 'member_weekend_pct' in results:
         casual_weekend = results['casual_weekend_pct']
         member_weekend = results['member_weekend_pct']
         weekend_ratio = casual_weekend / member_weekend
-        
+
         recommendations += f"""
 ### 📅 Weekly Usage Patterns
 
@@ -210,7 +80,7 @@ Based on the comprehensive analysis of Cyclistic bike-share data, we have identi
 
 **Insight**: Casual riders prefer weekend recreational riding, while members show consistent weekday commuting patterns.
 """
-    
+
     recommendations += """
 ## Strategic Recommendations
 
@@ -328,8 +198,139 @@ The recommended multi-tiered approach provides multiple entry points for casual 
 *Generated by Cyclistic Data Analysis System*
 *Contact: Data Analytics Team*
 """
-    
+
     return recommendations
+
+
+def main() -> None:
+    """Main analysis function."""
+    parser = argparse.ArgumentParser(description='Run Cyclistic Bike-Share Analysis')
+    parser.add_argument('--sample', action='store_true',
+                        help='Use sample data instead of original files')
+    parser.add_argument('--output-dir', default='results',
+                        help='Directory to save results (default: results/)')
+    parser.add_argument('--no-visualizations', action='store_true',
+                        help='Skip generating visualizations')
+
+    args = parser.parse_args()
+
+    # Create output directory
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(exist_ok=True)
+
+    print("=" * 60)
+    print("CYCLISTIC BIKE-SHARE ANALYSIS")
+    print("=" * 60)
+    print(f"Output directory: {output_dir}")
+    print(f"Using sample data: {args.sample}")
+    print()
+
+    # Initialize data manager
+    print("Setting up data...")
+    data_manager = DataManager()
+
+    try:
+        # Setup data
+        file_2019, file_2020, is_sample = data_manager.setup_data(force_sample=args.sample)
+
+        if is_sample:
+            print("📊 Using sample data for demonstration")
+        else:
+            print("📊 Using original Divvy trip data")
+
+        print("Data files:")
+        print(f"  - 2019 Q1: {file_2019}")
+        print(f"  - 2020 Q1: {file_2020}")
+        print()
+
+        # Initialize analyzer
+        print("Initializing analyzer...")
+        analyzer = CyclisticAnalyzer()
+
+        # Prepare data
+        print("Preparing data...")
+        if file_2019.exists() and file_2020.exists():
+            analyzer.prepare_data(str(file_2019), str(file_2020))
+        else:
+            analyzer.prepare_data()  # Use built-in sample data
+
+        print()
+
+        # Run analysis
+        print("Running comprehensive analysis...")
+        results = analyzer.run_complete_analysis()
+
+        if results:
+            # Save results to file
+            results_file = output_dir / 'analysis_results.txt'
+            with open(results_file, 'w') as f:
+                f.write("CYCLISTIC BIKE-SHARE ANALYSIS RESULTS\n")
+                f.write("=" * 50 + "\n\n")
+
+                for key, value in results.items():
+                    if isinstance(value, (int, float)):
+                        if isinstance(value, float):
+                            f.write(f"{key}: {value:.2f}\n")
+                        else:
+                            f.write(f"{key}: {value:,}\n")
+                    else:
+                        f.write(f"{key}: {value}\n")
+
+            print(f"\n📄 Analysis results saved to: {results_file}")
+
+        # Generate summary report
+        print("\n" + "=" * 60)
+        analyzer.generate_summary_report()
+
+        # Generate visualizations
+        if not args.no_visualizations:
+            print("\n" + "=" * 60)
+            print("GENERATING VISUALIZATIONS")
+            print("=" * 60)
+
+            # Initialize visualizer
+            visualizer = CyclisticVisualizer(analyzer)
+
+            # Create visualization output directory
+            viz_dir = output_dir / "visualizations"
+            viz_dir.mkdir(exist_ok=True)
+
+            try:
+                # Generate all visualizations
+                visualizer.generate_all_visualizations(str(viz_dir))
+                print(f"📊 Visualizations saved to: {viz_dir}")
+            except Exception as e:
+                print(f"⚠️  Error generating visualizations: {e}")
+                print("This might be due to missing display or matplotlib backend issues.")
+
+        # Generate business recommendations
+        print("\n" + "=" * 60)
+        print("BUSINESS RECOMMENDATIONS")
+        print("=" * 60)
+
+        recommendations = generate_recommendations(results if results else {})
+
+        # Save recommendations
+        recommendations_file = output_dir / 'business_recommendations.md'
+        with open(recommendations_file, 'w') as f:
+            f.write(recommendations)
+
+        print(f"💡 Business recommendations saved to: {recommendations_file}")
+
+        print("\n" + "=" * 60)
+        print("ANALYSIS COMPLETE")
+        print("=" * 60)
+        print(f"📁 All results saved to: {output_dir}")
+        print("\nFiles generated:")
+        print("  - analysis_results.txt")
+        print("  - business_recommendations.md")
+        if not args.no_visualizations:
+            print("  - visualizations/ (PNG files)")
+
+    except Exception as e:
+        print(f"❌ Error during analysis: {e}")
+        print("\nPlease check your data files and try again.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
