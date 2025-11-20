@@ -13,7 +13,7 @@ __author__ = "Muhammad Baihaqi"
 __email__ = "bhqmuhammad@example.com"
 
 from .cyclistic_analyzer import CyclisticAnalyzer
-from .visualizations import CyclisticVisualizer
 from .data_utils import DataManager
+from .visualizations import CyclisticVisualizer
 
-__all__ = ['CyclisticAnalyzer', 'CyclisticVisualizer', 'DataManager']
+__all__ = ["CyclisticAnalyzer", "CyclisticVisualizer", "DataManager"]
